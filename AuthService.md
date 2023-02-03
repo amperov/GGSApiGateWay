@@ -45,4 +45,39 @@
 > "access-code": "123jsdfk13jk1243jk123123tsgsdg",
 > "status": "registered"
 > }
-```
+> ```
+### Process of Recovering Password
+> ### ```POST: /auth/recover```
+> ### Description:
+> After got request: server send code to Email from Request and returned you ActionUID
+> ### Request:
+> ```json lines
+> {
+> "email": "user@email.net",
+> "location": "USA, California"
+> }
+>```
+> ### Response:
+> ```json lines
+> {
+> "action-uid": "123kjnsdf123",
+> "status": "success, code sent",
+> }
+>```
+> ### ```POST: /auth/recover/code```
+> ### Description:
+> After got request: server send code to Email from Request and returned you ActionUID
+> ### Request:
+> ```json lines
+> {
+> "action-uid": "123kjnsdf123",
+> "code": 124819
+> }
+>```
+> ### Response:
+> ```json lines
+> {
+> "status": "success",
+> "access-code": "123lsdfkljfsdkjl1235352asd"
+> }
+>```

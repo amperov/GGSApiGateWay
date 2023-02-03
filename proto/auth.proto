@@ -1,0 +1,95 @@
+
+syntax = "proto3";
+
+package grpc;
+
+service Authorization{
+  rpc SignUp(SignUpRequest) returns (SignResponse){}
+  rpc SignIn(SignInRequest) returns (SignResponse){}
+  rpc Identity(IdentityRequest) returns (IdentityResponse){}
+  rpc RecoverPassword(RecoverPasswordRequest) returns (RecoverPasswordResponse){}
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse){}
+  rpc AcceptAction(AcceptActionRequest) returns (AcceptActionResponse){}
+}
+
+message IdentityRequest{
+  string AccessCode = 1;
+}
+
+message IdentityResponse{
+  int64 UserID = 1;
+  string Status = 2;
+}
+
+
+message SignInRequest{
+  string email = 1;
+  string password = 2;
+}
+
+message SignUpRequest{
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  DateOfBirth date = 4;
+  Location location = 5;
+}
+
+message SignResponse{
+  string AccessCode = 1;
+  string Status = 2;
+}
+
+
+message RecoverPasswordRequest{
+  string Email = 1;
+  Location location = 2;
+}
+
+message RecoverPasswordResponse{
+  int64 ActionUID = 1;
+  string Status = 2;
+}
+
+
+message ChangePassword{
+  string ActionUID = 1;
+  string Email = 2;
+  string CurrentPassword = 3;
+  string NewPassword = 4;
+  Location location =5;
+}
+
+
+message AcceptActionRequest{
+  string ActionUID = 1;
+  int32 ConfirmCode = 2;
+}
+
+message AcceptActionResponse{
+  string Status = 1;
+}
+
+// On the server holding info that this email can change password
+message ChangePasswordRequest{
+  string Email = 1;
+  string NewPassword = 2;
+}
+
+message ChangePasswordResponse{
+  string AccessCode = 1;
+  string Status = 2;
+}
+
+
+message DateOfBirth{
+  int32 Year = 1;
+  int32 Month = 2;
+  int32 Day = 3;
+}
+
+message Location{
+  string County = 1;
+  string Region = 2;
+  string City = 3;
+}
