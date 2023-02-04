@@ -3,6 +3,8 @@ syntax = "proto3";
 
 package grpc;
 
+option go_package = "./grpc";
+
 service Authorization{
   rpc SignUp(SignUpRequest) returns (SignResponse){}
   rpc SignIn(SignInRequest) returns (SignResponse){}
@@ -28,11 +30,8 @@ message SignInRequest{
 }
 
 message SignUpRequest{
-  string username = 1;
-  string email = 2;
-  string password = 3;
-  DateOfBirth date = 4;
-  Location location = 5;
+  string email = 1;
+  string password = 2;
 }
 
 message SignResponse{
@@ -47,17 +46,8 @@ message RecoverPasswordRequest{
 }
 
 message RecoverPasswordResponse{
-  int64 ActionUID = 1;
-  string Status = 2;
-}
-
-
-message ChangePassword{
   string ActionUID = 1;
-  string Email = 2;
-  string CurrentPassword = 3;
-  string NewPassword = 4;
-  Location location =5;
+  string Status = 2;
 }
 
 
@@ -68,6 +58,7 @@ message AcceptActionRequest{
 
 message AcceptActionResponse{
   string Status = 1;
+  string AccessCode = 2;
 }
 
 // On the server holding info that this email can change password
@@ -89,7 +80,7 @@ message DateOfBirth{
 }
 
 message Location{
-  string County = 1;
+  string Country = 1;
   string Region = 2;
   string City = 3;
 }

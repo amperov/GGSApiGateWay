@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+//Add Photo
+//Delete Photo
+//Update Username
+//Update Location
+//Set Deactivate Account
+//Set Activate Account
+option go_package = "./auth";

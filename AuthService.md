@@ -35,7 +35,7 @@
 > "username": "Сергей",        // Not bound be unique
 > "date_birth": "12.12.2001",  // Must be in format: dd.mm.yyyy
 > "email": "user@email.net",
-> "location": "Country, Region, City", // Must be only in this format, else skip all that after unknown
+> "location": "123.234.34.23",
 > "password": "MyPassword"
 > }
 > ```
@@ -54,7 +54,7 @@
 > ```json lines
 > {
 > "email": "user@email.net",
-> "location": "USA, California"
+> "location": "123.234.23.12"
 > }
 >```
 > ### Response:
