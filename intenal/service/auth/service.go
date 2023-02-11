@@ -10,6 +10,18 @@ type ServiceAuth struct {
 	AuthClient grpc.AuthorizationClient
 }
 
+func NewServiceAuth(authClient grpc.AuthorizationClient) *ServiceAuth {
+	return &ServiceAuth{AuthClient: authClient}
+}
+
+func (s *ServiceAuth) CheckAuth(ctx context.Context, check *auth.UserCheck) (int, error) {
+	Response, err := s.AuthClient.Identity(ctx, check.ToGRPCForAuth())
+	if err != nil {
+		return 0, err
+	}
+	return int(Response.GetUserID()), nil
+}
+
 func (s *ServiceAuth) RegisterUser(ctx context.Context, user *auth.UserCreate) (string, string, error) {
 	Response, err := s.AuthClient.SignUp(ctx, user.ToGRPCForAuth())
 	if err != nil {
