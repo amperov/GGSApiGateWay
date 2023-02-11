@@ -7,3 +7,19 @@ syntax = "proto3";
 //Set Deactivate Account
 //Set Activate Account
 option go_package = "./auth";
+
+service UserService{
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse){}
+}
+
+message GetProfileRequest{
+  int64 UserID = 1;
+}
+
+message GetProfileResponse{
+  string Username =1;
+  string Email = 2;
+  string Location = 3;
+  string DateBirth = 4;
+  repeated bytes Photos = 5;
+}
