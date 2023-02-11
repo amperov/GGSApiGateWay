@@ -42,7 +42,6 @@ message SignResponse{
 
 message RecoverPasswordRequest{
   string Email = 1;
-  Location location = 2;
 }
 
 message RecoverPasswordResponse{
