@@ -35,14 +35,18 @@
 > "username": "Сергей",        // Not bound be unique
 > "date_birth": "12.12.2001",  // Must be in format: dd.mm.yyyy
 > "email": "user@email.net",
-> "location": "123.234.34.23",
+> "location": {
+>   "country": "Russia",
+>   "region":" Krasnoyarskiy krai",
+>   "city": "Krasnoyarsk"
+>   },
 > "password": "MyPassword"
 > }
 > ```
 > ### Response:
 > ```json lines
 > {
-> "access-code": "123jsdfk13jk1243jk123123tsgsdg",
+> "access-code": "123jsk13jk1243jk123123tdg",
 > "status": "registered"
 > }
 > ```
@@ -60,7 +64,7 @@
 > ### Response:
 > ```json lines
 > {
-> "action-uid": "123kjnsdf123",
+> "action-uid": "123kdf123",
 > "status": "success, code sent",
 > }
 >```
@@ -70,7 +74,7 @@
 > ### Request:
 > ```json lines
 > {
-> "action-uid": "123kjnsdf123",
+> "action-uid": "123kdf123",
 > "code": 124819
 > }
 >```
@@ -78,6 +82,26 @@
 > ```json lines
 > {
 > "status": "success",
-> "access-code": "123lsdfkljfsdkjl1235352asd"
+> "access-code": "123l1afd2asd2ajl123532asd"
+> }
+>```
+> ### ```POST: /auth/me```
+> ### Description:
+> After got request: server send code to Email from Request and returned you ActionUID
+> ### Request:
+> ```json lines
+> {
+> "access-code": "123ksd2fsf134123df123"
+> }
+>```
+> ### Response:
+> ```json lines
+> {
+> "status": "success",
+> "username": "UserName",
+> "email": "user@gmail.ru",
+> "date-birth": "12.02.2000",
+> "location": "Country, Region, City",
+> "photos": [[],[],[],[]]
 > }
 >```
