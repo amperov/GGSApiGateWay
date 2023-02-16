@@ -9,10 +9,10 @@ import (
 )
 
 type ServiceAuth interface {
-	RegisterUser(ctx context.Context, user *UserCreate) (string, string, error)
-	AuthorizeUser(ctx context.Context, user *UserAuthorize) (string, string, error)
+	RegisterUser(ctx context.Context, user *UserCreate) (string, string, string, error)
+	AuthorizeUser(ctx context.Context, user *UserAuthorize) (string, string, string, error)
 	RecoverRequest(ctx context.Context, recover *UserRecover) (string, string, error)
-	AcceptCode(ctx context.Context, accept *UserAccept) (string, string, error)
+	AcceptCode(ctx context.Context, accept *UserAccept) (string, string, string, error)
 }
 
 type HandlerAuth struct {
@@ -41,12 +41,12 @@ func (h *HandlerAuth) SignUp(writer http.ResponseWriter, r *http.Request, params
 		return
 	}
 
-	AccessCode, Status, err := h.Auth.RegisterUser(r.Context(), &CreateUserInput)
+	AccessToken, RefreshToken, Status, err := h.Auth.RegisterUser(r.Context(), &CreateUserInput)
 	if err != nil {
 		return
 	}
 
-	_, err = writer.Write(tooling.SignInResponse(AccessCode, Status))
+	_, err = writer.Write(tooling.SignInResponse(AccessToken, RefreshToken, Status))
 	if err != nil {
 		return
 	}
@@ -61,12 +61,12 @@ func (h *HandlerAuth) SignIn(w http.ResponseWriter, r *http.Request, params http
 		return
 	}
 
-	AccessCode, Status, err := h.Auth.AuthorizeUser(r.Context(), &AuthorizeUserInput)
+	AccessToken, RefreshToken, Status, err := h.Auth.AuthorizeUser(r.Context(), &AuthorizeUserInput)
 	if err != nil {
 		return
 	}
 
-	_, err = w.Write(tooling.SignInResponse(AccessCode, Status))
+	_, err = w.Write(tooling.SignInResponse(AccessToken, RefreshToken, Status))
 	if err != nil {
 		return
 	}
@@ -98,12 +98,12 @@ func (h *HandlerAuth) AcceptCode(w http.ResponseWriter, r *http.Request, params 
 		return
 	}
 
-	AccessCode, Status, err := h.Auth.AcceptCode(r.Context(), &AcceptCodeInput)
+	AccessToken, RefreshToken, Status, err := h.Auth.AcceptCode(r.Context(), &AcceptCodeInput)
 	if err != nil {
 		return
 	}
 
-	_, err = w.Write(tooling.SignInResponse(AccessCode, Status))
+	_, err = w.Write(tooling.SignInResponse(AccessToken, RefreshToken, Status))
 	if err != nil {
 		return
 	}

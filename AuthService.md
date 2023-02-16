@@ -17,7 +17,8 @@
 > ### Response:
 > ```json lines
 > {
-> "access-code": "123jsdfk13jk1243jk",
+> "access-token": "123jsdfk13jk1243jk",
+>  "refresh-token": "123jsdfk13jk1243jk",
 > "status": "authorized"
 > }
 > ```
@@ -93,7 +94,8 @@
 > ```json lines
 > {
 > "status": "success",
-> "access-code": "123l1afd2asd2ajl123532asd"
+> "access-token": "123l1afd2asd2ajl123532asd",
+> "refresh-token": "123jsdfk13jk1243jk",
 > }
 >```
 > ### ```POST: /profile```

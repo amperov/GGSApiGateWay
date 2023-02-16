@@ -47,12 +47,13 @@ func (s *ServiceAuth) RecoverRequest(ctx context.Context, recover *auth.UserReco
 	return Response.GetActionUID(), Response.GetStatus(), nil
 }
 
-func (s *ServiceAuth) AcceptCode(ctx context.Context, accept *auth.UserAccept) (string, string, error) {
+// TODO
+func (s *ServiceAuth) AcceptCode(ctx context.Context, accept *auth.UserAccept) (string, string, string, error) {
 
 	Response, err := s.AuthClient.AcceptAction(ctx, accept.ToGRPC())
 	if err != nil {
-		return "", err.Error(), err
+		return "", "", err.Error(), err
 	}
 
-	return Response.GetAccessCode(), Response.GetStatus(), nil
+	return Response.GetAccessCode(), "", Response.GetStatus(), nil
 }
