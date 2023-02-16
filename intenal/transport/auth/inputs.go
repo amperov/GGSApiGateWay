@@ -62,11 +62,12 @@ func (u *UserAccept) ToGRPC() *grpc.AcceptActionRequest {
 }
 
 type UserCheck struct {
-	AccessCode string `json:"access_code,omitempty"`
+	AccessToken  string `json:"access_token,omitempty"`
+	RefreshToken string `json:"refresh_token"`
 }
 
 func (c *UserCheck) ToGRPCForAuth() *grpc.IdentityRequest {
 
-	return &grpc.IdentityRequest{AccessCode: c.AccessCode}
+	return &grpc.IdentityRequest{AccessToken: c.AccessToken, RefreshToken: c.RefreshToken}
 
 }

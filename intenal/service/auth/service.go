@@ -22,20 +22,20 @@ func (s *ServiceAuth) CheckAuth(ctx context.Context, check *auth.UserCheck) (int
 	return int(Response.GetUserID()), nil
 }
 
-func (s *ServiceAuth) RegisterUser(ctx context.Context, user *auth.UserCreate) (string, string, error) {
+func (s *ServiceAuth) RegisterUser(ctx context.Context, user *auth.UserCreate) (string, string, string, error) {
 	Response, err := s.AuthClient.SignUp(ctx, user.ToGRPCForAuth())
 	if err != nil {
-		return "", err.Error(), err
+		return "", "", err.Error(), err
 	}
-	return Response.GetAccessCode(), Response.GetStatus(), nil
+	return Response.GetAccessToken(), Response.GetRefreshToken(), Response.GetStatus(), nil
 }
 
-func (s *ServiceAuth) AuthorizeUser(ctx context.Context, user *auth.UserAuthorize) (string, string, error) {
+func (s *ServiceAuth) AuthorizeUser(ctx context.Context, user *auth.UserAuthorize) (string, string, string, error) {
 	Response, err := s.AuthClient.SignIn(ctx, user.ToGRPCForAuth())
 	if err != nil {
-		return "", err.Error(), err
+		return "", "", err.Error(), err
 	}
-	return Response.GetAccessCode(), Response.GetStatus(), nil
+	return Response.GetAccessToken(), Response.GetRefreshToken(), Response.GetStatus(), nil
 }
 
 func (s *ServiceAuth) RecoverRequest(ctx context.Context, recover *auth.UserRecover) (string, string, error) {

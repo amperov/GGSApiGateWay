@@ -34,17 +34,13 @@
 > ### Response:
 > ```json lines
 > {
-> "access-code": "123jsk13jk1243jk123123tdg",
+> "access-token": "123jsk13jk1243jk123123tdg",
+> "refresh-token": "123jsk13jk1243jka2f2dsf123123tdg",
 > "status": "registered"
 > }
 > ```
 ### Complete Registration:
 >### ```POST: /auth/sign/up/complete```
-> ### Description:
-> If success server return ```Access Code```
-> for 1 hour and status ```Authorized``` \
-> Else Server return empty ```Access Code``` and error in status like ```"broken data"``` or ```"email used before"```
->
 > ### Request:
 > ```json lines
 > {
@@ -54,14 +50,14 @@
 >   "country": "Russia",
 >   "region":" Krasnoyarskiy krai",
 >   "city": "Krasnoyarsk"
->   },
-> "access-code": "YourAccessCode"
+>   }
 > }
 > ```
 > ### Response:
 > ```json lines
 > {
-> "access-code": "123jsk13jk1243jk123123tdg",
+> "access-token": "123jsk13jk1243jk123123tdg",
+> "refresh-token": "12412lgj1kls1jdg1klj1lsd1kgj",
 > "status": "registered"
 > }
 > ```
@@ -100,9 +96,9 @@
 > "access-code": "123l1afd2asd2ajl123532asd"
 > }
 >```
-> ### ```POST: /auth/me```
+> ### ```POST: /profile```
 > ### Description:
-> After got request: server send code to Email from Request and returned you ActionUID
+> After got request: server send code to Email from Request and return you ActionUID
 > ### Request:
 > ```json lines
 > {
@@ -116,7 +112,6 @@
 > "username": "UserName",
 > "email": "user@gmail.ru",
 > "date-birth": "12.02.2000",
-> "location": "Country, Region, City",
-> "photos": [[],[],[],[]]
+> "location": "Country, Region, City"
 > }
 >```

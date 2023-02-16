@@ -25,7 +25,7 @@ func (w *MiddleWare) IsAuth(handle httprouter.Handle) httprouter.Handle {
 		header := request.Header.Get("Authorization")
 		headerArray := strings.Split(header, " ")
 
-		id, err := w.ServiceAuth.CheckAuth(context.Background(), &auth.UserCheck{AccessCode: headerArray[0]})
+		id, err := w.ServiceAuth.CheckAuth(context.Background(), &auth.UserCheck{AccessToken: headerArray[1], RefreshToken: headerArray[2]})
 		if err != nil {
 			logrus.Println(err)
 			return
