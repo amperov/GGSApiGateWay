@@ -23,24 +23,39 @@
 > ```
 
 ### For Registration:
->### ```POST: /auth/sign/up```
+>### ```POST: /auth/sign/up/request```
+> ### Request:
+> ```json lines
+> {
+> "email": "user@email.net",
+> "password": "MyPassword"
+> }
+> ```
+> ### Response:
+> ```json lines
+> {
+> "access-code": "123jsk13jk1243jk123123tdg",
+> "status": "registered"
+> }
+> ```
+### Complete Registration:
+>### ```POST: /auth/sign/up/complete```
 > ### Description:
 > If success server return ```Access Code```
 > for 1 hour and status ```Authorized``` \
 > Else Server return empty ```Access Code``` and error in status like ```"broken data"``` or ```"email used before"```
-> 
+>
 > ### Request:
 > ```json lines
 > {
 > "username": "Сергей",        // Not bound be unique
 > "date_birth": "12.12.2001",  // Must be in format: dd.mm.yyyy
-> "email": "user@email.net",
 > "location": {
 >   "country": "Russia",
 >   "region":" Krasnoyarskiy krai",
 >   "city": "Krasnoyarsk"
 >   },
-> "password": "MyPassword"
+> "access-code": "YourAccessCode"
 > }
 > ```
 > ### Response:

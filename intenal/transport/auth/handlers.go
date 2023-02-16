@@ -3,7 +3,6 @@ package auth
 import (
 	"GGSAPI/pkg/tooling"
 	"context"
-	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -14,30 +13,23 @@ type ServiceAuth interface {
 	AuthorizeUser(ctx context.Context, user *UserAuthorize) (string, string, error)
 	RecoverRequest(ctx context.Context, recover *UserRecover) (string, string, error)
 	AcceptCode(ctx context.Context, accept *UserAccept) (string, string, error)
-	CheckAuth(ctx context.Context, check *UserCheck) (int, error)
-}
-
-type ServiceUser interface {
-	GetProfile(ctx context.Context, UserID int) (map[string]interface{}, error)
 }
 
 type HandlerAuth struct {
 	Auth ServiceAuth
-	User ServiceUser
 }
 
-func NewHandlerAuth(auth ServiceAuth, user ServiceUser) *HandlerAuth {
-	return &HandlerAuth{Auth: auth, User: user}
+func NewHandlerAuth(auth ServiceAuth) *HandlerAuth {
+	return &HandlerAuth{Auth: auth}
 }
 
 func (h *HandlerAuth) Register(r *httprouter.Router) {
 	logrus.Info("Auth Handler Initializing")
 
-	r.POST("/auth/sign/up", h.SignUp)
+	r.POST("/auth/sign/up/request", h.SignUp)
 	r.POST("/auth/sign/in", h.SignIn)
 	r.POST("/auth/recover/request", h.Recover)
 	r.POST("/auth/recover/code", h.AcceptCode)
-	r.POST("/auth/me", h.CheckAuth)
 }
 
 func (h *HandlerAuth) SignUp(writer http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -115,28 +107,4 @@ func (h *HandlerAuth) AcceptCode(w http.ResponseWriter, r *http.Request, params 
 	if err != nil {
 		return
 	}
-}
-
-func (h *HandlerAuth) CheckAuth(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	var UserCheck UserCheck
-	err := tooling.UnmarshallAll(r.Body, UserCheck)
-	if err != nil {
-		return
-	}
-	UserID, err := h.Auth.CheckAuth(r.Context(), &UserCheck)
-	if err != nil {
-		return
-	}
-
-	Profile, err := h.User.GetProfile(r.Context(), UserID)
-	if err != nil {
-		return
-	}
-
-	ProfileBytes, err := json.Marshal(Profile)
-	if err != nil {
-		return
-	}
-
-	w.Write(ProfileBytes)
 }
